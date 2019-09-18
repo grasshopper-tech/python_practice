@@ -1,0 +1,39 @@
+def cost_groundshipping(weight):
+  if weight <= 2:
+    cost = weight * 1.50 + 20.00
+  elif weight <= 6:
+    cost = weight * 3.00 + 20.00
+  elif weight <= 10:
+    cost = weight * 4.00 + 20.00
+  else:
+    cost = weight * 4.75 + 20.00
+  return cost
+#Testen der Funktion
+print(cost_groundshipping(8.4))
+
+#Variable für Premium
+premium_groundshipping = 125.00
+
+def cost_droneshipping(weight):
+  if weight <= 2:
+    cost = 4.50 * weight
+  elif weight <= 6:
+    cost = 9.00 * weight
+  elif weight <= 10:
+    cost = 12.00 * weight
+  else:
+    cost = 14.25 * weight
+  return cost
+#Testen der Funktion
+print(cost_droneshipping(1.5))
+
+def cheapest_cost(weight):
+  if cost_groundshipping(weight) < cost_droneshipping(weight) and cost_groundshipping(weight) < premium_groundshipping:
+    return "The groundshipping method is the cheapest. You have to pay " + str(cost_groundshipping(weight))
+  elif cost_droneshipping(weight) < cost_groundshipping(weight) and cost_droneshipping(weight) < premium_groundshipping:
+    return "The droneshipping method is the cheapest. You have to pay " + str(cost_droneshipping(weight))
+  else:
+    return "The premium groundshipping method is the cheapest. You have to pay " + str(premium_groundshipping)
+
+print(cheapest_cost(4.8))
+print(cheapest_cost(41.5))
