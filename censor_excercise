@@ -33,16 +33,16 @@ def censor_negative(lst, text):
     i1 = i.split("\n")
     for words in i1:
       text_worte.append(words)
-      
+  #print(text_worte)
+  count = 0
   for i in range(len(text_worte)):
     text_worte_clear = []
     if text_worte[i] in lst:
       count += 1
       if count > 2:
-        world_clean = "-negative-"
-        text_worte_clear[i] = text_worte[i].replace(text_worte[i], world_clean)
-        return " ".join(text_worte_clear)
-      return " ".join(text_worte)
-     
+        text_worte_clear.append("-negative-")
+      else:
+        text_worte_clear.append[text_worte[i]]
+  return " ".join(text_worte_clear) 
 
 print(censor_negative(negative_words, email_three))
