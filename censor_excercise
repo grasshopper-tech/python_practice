@@ -1,0 +1,48 @@
+# These are the emails you will be censoring. The open() function is opening the text file that the emails are contained in and the .read() method is allowing us to save their contexts to the following variables:
+email_one = open("email_one.txt", "r").read()
+email_two = open("email_two.txt", "r").read()
+email_three = open("email_three.txt", "r").read()
+email_four = open("email_four.txt", "r").read()
+
+def censor_phrase(phrase, text):
+  if phrase in text:
+    new_text = text.replace(phrase, "-censored-")
+    return new_text
+  else:
+    return text
+#print(censor_phrase("learning algorithms", email_one))
+
+#Problem mit Groß- und Kleinschreibung
+def censor_list(lst, text):
+  for element in lst:
+    lower_text = text.lower()
+    if element in lower_text:
+      text = lower_text.replace(element, "-censored-")
+    return text
+
+proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
+#print(censor_list(proprietary_terms, email_two))
+
+negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", "distressing", "concerning", "horrible", "horribly", "questionable"]
+      
+def censor_negative(lst, text):
+  new_text = censor_list(proprietary_terms, text)
+  count = 0
+  text_worte = []
+  for i in new_text.split(" "):
+    i1 = i.split("\n")
+    for words in i1:
+      text_worte.append(words)
+      
+  for i in range(len(text_worte)):
+    text_worte_clear = []
+    if text_worte[i] in lst:
+      count += 1
+      if count > 2:
+        world_clean = "-negative-"
+        text_worte_clear[i] = text_worte[i].replace(text_worte[i], world_clean)
+        return " ".join(text_worte_clear)
+      return " ".join(text_worte)
+     
+
+print(censor_negative(negative_words, email_three))
