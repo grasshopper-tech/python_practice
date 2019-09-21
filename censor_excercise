@@ -48,3 +48,27 @@ def censor_negative(lst, text):
 
 print(censor_negative(negative_words, email_three))
 #print(email_three)
+
+def censor_all_negative(text):
+  new_text = censor_negative(negative_words, text)
+  text_worte = []
+  for i in new_text.split(" "):
+    i1 = i.split("\n")
+    for words in i1:
+      text_worte.append(words)
+  text_worte_clear = []
+  
+  
+  for i in range(1, len(text_worte)-1):
+    if text_worte[i+1] == "-negative-" or text_worte[i+1] == "-censored-":
+      text_worte[i] = "-not shown-"
+      text_worte_clear.append(text_worte[i])
+    elif text_worte[i-1] == "-negative-" or text_worte[i-1] == "-censored-":
+      text_worte[i] = "-not shown-"
+      text_worte_clear.append(text_worte[i])
+    else:
+      text_worte_clear.append(text_worte[i])
+  return " ".join(text_worte_clear)
+
+#print(email_four)
+print(censor_all_negative(email_four))
