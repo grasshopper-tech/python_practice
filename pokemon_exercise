@@ -1,0 +1,109 @@
+class Pokemon:
+  def __init__(self, name, level, p_type, max_health, health, knocked_out):
+    self.name = name
+    self.level = level
+    self.p_type = p_type
+    self.max_health = max_health
+    self.health = health
+    self.knocked_out = knocked_out
+    
+  def __repr__(self):
+    return print(self.name + " of the type " + self.p_type + " is in level " + str(self.level) + ". It's maximum health is " + str(self.max_health) + " and it's current health is " + str(self.health) + ". It's Knock-out-status is " + str(self.knocked_out) + ".")
+    
+  def knock_out(self):
+    self.knocked_out == True
+    self.health = 0
+    return print(self.name + " has been knocked out.")
+    
+  def lose_health(self, damage):
+    if self.health > damage:
+      self.health -= damage
+    else:
+      self.knock_out()
+    print(self.name + " now has " + str(self.health) + " health.")
+    return self.health
+      
+  def gain_health(self, extra):
+    if self.max_health >= (self.health + extra):
+      self.health += extra
+    else:
+      self.health = self.max_health
+    print(self.name + "'s Pokemon now has " + str(self.health) + " health.")
+    return self.health
+  
+  def attack(self, pokemon_attacked, damage):
+    if self.health == 0:
+      if self.p_type == "Fire" and pokemon_attacked.p_type == "Water":
+        pokemon_attacked.lose_health(damage * self.level/2)
+      elif self.p_type == "Water" and pokemon_attacked.p_type == "Fire":
+        pokemon_attacked.lose_health(damage*self.level*2)
+      elif self.p_type == "Fire" and pokemon_attacked.p_type == "Grass":
+        pokemon_attacked.lose_health(damage*self.level*2)
+      elif self.p_type == "Grass" and pokemon_attacked.p_type == "Fire":
+        pokemon_attacked.lose_health(damage*self.level/2)
+      else:
+        pokemon_attacked.lose_health(damage*self.level)
+      print(pokemon_attacked.name + " was attacked by " + self.name + ". It's health decreased to " + str(pokemon_attacked.health) + ".")
+    else:
+      print("Your Pokemon was knocked out. It is not able to attack anymore.")
+    return pokemon_attacked.health
+  
+class Trainer(Pokemon):
+  def __init__(self, t_name, t_potions, t_active_pokemon, t_pokemons):
+    self.name = t_name
+    self.potions = t_potions
+    self.active_pokemon = t_active_pokemon
+    self.pokemons = t_pokemons
+   
+    
+  def use_potion(self):
+    self.active_pokemon.health = self.active_pokemon.max_health
+    if self.potions > 1:
+      self.potions -=1
+    else:
+      self.potions = 0
+    print(self.active_pokemon.name + " was healed. It's health was set to " + str(self.active_pokemon.max_health) + ". You have " + str(self.potions) + " left." )
+    return self.active_pokemon.health
+  
+  def attack(self, trainer_attacked, damage):
+    pokemon_attacked = trainer_attacked.active_pokemon
+    print("Attention! " + trainer_attacked.name + " is being attacked by " + self.name + "!")
+    self.active_pokemon.attack(pokemon_attacked, damage)
+    
+  def switch_pokemon(self, new_pokemon):
+    if new_pokemon.health == 0:
+      self.active_pokemon = new_pokemon
+      print("The active pokemon was changed. " + self.name + "'s active pokemon now is " + self.active_pokemon.name + ".")
+    else:
+      print("You cannot switch to " + new_pokemon.name + ", because it was knocked out.")
+  
+pikachu = Pokemon("Pikachu", 2, "Water", 100, 80, False)
+pikachu.__repr__()
+
+salamander = Pokemon("Salamander", 5, "Fire", 100, 80, False)
+
+#pikachu.lose_health(20)
+#pikachu.gain_health(10)
+#pikachu.lose_health(80)
+pikachu.attack(salamander, 5)
+salamander.__repr__()
+salamander.attack(pikachu, 5)
+olena = Trainer("Olena", 5, pikachu, [pikachu, salamander])
+olena.use_potion()
+alex = Trainer("Alex", 5, salamander, [pikachu, salamander])
+olena.attack(alex,10)
+
+olena.switch_pokemon(salamander)
+alex.attack(olena, 80)
+olena.attack(alex, 10)
+olena.switch_pokemon(pikachu)
+olena.switch_pokemon(salamander)
+
+#Add more functionality that we haven’t implemented yet. Here is a list of ideas that you might want to try:
+
+    Give Pokémon experience for battling other Pokémon. A Pokémon’s level should increase once it gets enough experience points.
+    Create specific Classes that inherit from the general Pokémon class. For example, could you create a Charmander class that has all of the functionality of a Pokémon plus some extra features?
+    Let your Pokémon evolve once they hit a certain level.
+    Have more stats associated with a Pokémon. In the real game, every Pokémon has stats like Speed, Attack, Defense. All of those stats effect the way Pokemon battle with each other. For example, the Pokémon with the larger Speed stat will go first in the battle.
+
+
