@@ -1,0 +1,84 @@
+def play_game():
+    print("Hello. Welcome to your game. This is your board: \n")
+    print_board()
+    if choose_player() == 1:
+        single_player()
+    else:
+        two_players()
+
+
+row_1 = ["", "", ""]
+row_2 = ["", "", ""]
+row_3 = ["", "", ""]
+possible = [0, 1, 2]
+
+
+def print_board():
+    print(row_1, "\n")
+    print(row_2, "\n")
+    print(row_3, "\n")
+
+
+def choose_player():
+    player = input('How many players are playing? ')
+
+    if player == '1':
+        print('You are playing against a computer.')
+        return 1
+    elif player == '2':
+        print('You both can start playing now.')
+        return 2
+    else:
+        print("Type in 1 or 2. Try again. ")
+        choose_player()
+
+
+def single_player():
+    pass
+
+
+def two_players(count = 0):
+    if count % 2 == 0 or count == 0:
+        print('First players turn.')
+        row_choice = input('Which row do you choose? ')
+        place_choice = int(input('Which place do you choose? ')) -1
+
+        if place_choice in possible:
+            if int(row_choice) == 1:
+                row = row_1
+            elif int(row_choice) == 2:
+                row = row_2
+            else:
+                row = row_3
+
+            if row[place_choice] == '':
+                row[place_choice] = 'X'
+            else:
+                print('This place is already taken.')
+        count += 1
+        print_board()
+        two_players(count)
+
+    else:
+        print('Second players turn. ')
+        row_choice = input('Which row do you choose? ')
+        place_choice = int(input('Which place do you choose? ')) -1
+
+        if place_choice in possible:
+            if int(row_choice) == 1:
+                row = row_1
+            elif int(row_choice) == 2:
+                row = row_2
+            else:
+                row = row_3
+
+            if row[place_choice] == '':
+                row[place_choice] = 'O'
+            else:
+                print('This place is already taken.')
+        count += 1
+        print_board()
+        two_players(count)
+
+
+play_game()
