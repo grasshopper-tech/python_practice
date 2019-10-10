@@ -1,0 +1,67 @@
+import random
+money = 100
+
+#Write your game of chance functions here
+def flipping_coin(amount, guess, money):
+  num = random.randint(0, 1)
+  chance = ['Heads', 'Tails']
+  flip = chance[num]
+  if flip == guess:
+    print("Congratulations, you guessed right! It was " + flip + ".")
+    money += amount
+    print('Current money amount: ' + str(money))
+  else:
+    print("Oh no, your guess was not correct. It was " + flip + ".")
+    if money > amount:
+      money -= amount
+      print('Current money amount: ' + str(money) + " . You have lost " + str(-amount) + ".")
+      return
+    else:
+      print("Sorry, you lost all your money. Game over.")
+      return
+    
+def cho_han(amount, guess, money):
+  dice_1 = random.randint(1, 6)
+  dice_2 = random.randint(1, 6)
+  dice_sum = dice_1 + dice_2
+  odd_even = dice_sum % 2
+  if (odd_even == 0 and guess == 'Even') or (odd_even != 0 and guess == 'Odd'):
+    print("Congratulations, you guessed right! It was " + str(dice_sum) + ".")
+    money += amount
+    print('Current money amount: ' + str(money))
+  else:
+    print("Oh no, your guess was not correct. It was " + str(dice_sum) + ".")
+    if money > amount:
+      money -= amount
+      print('Current money amount: ' + str(money) + " . You have lost " + str(-amount) + ".")
+      return
+    else:
+      print("Sorry, you lost all your money. Game over.")
+      return
+    
+def card_game(amount, money):
+  player_one = random.randint(1, 10)
+  print('You took the card ' + str(player_one) + ".")
+  player_two = random.randint(1, 10)
+  print('Player 2 took the card ' + str(player_two) + ".")
+  
+  if player_one > player_two:
+    print("You won.")
+    money +=amount
+    print('Current money amount: ' + str(money))
+    return
+  elif player_two > player_one:
+    print("Player two wins.")
+    money -=amount
+    print('Current money amount: ' + str(money))
+    return
+  else:
+    print('It\'s a tie! Try again.')
+    card_game(amount, money)
+
+#Call your game of chance functions here
+flipping_coin(20, "Tails", money)
+
+cho_han(20, 'Odd', money)
+
+card_game(30, money)
