@@ -63,7 +63,7 @@ def plot_n_rankings(n, data):
     plt.ylabel('Rank')
   plt.show()
 
-plot_n_rankings(5, wood)
+plot_n_rankings(5, wood) 
 plt.clf()
 
 # load roller coaster data here:
